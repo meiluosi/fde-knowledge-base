@@ -30,5 +30,5 @@
 ## 回写规则
 下游发现上游假设被推翻，或客户纠正了流程、术语，写成“回写建议”：对象产物、原内容、新证据（带前缀编号）、建议修订。由上游 Skill 的修订流程处理，不直接改原件。
 
-## 系列地图中的位置
+## 系列地图中的位置（已登记于 fde-demo、fde-pilot 的 references/series.md）
 本 Skill 位于 problem-framing 之后，与 route-selection 并行或其后：route-selection 决定“用什么手段”，本 Skill 在手段含文档检索时决定“知识够不够、怎么治、怎么评、卡在哪”。边界：模型比选、成本估算、部署约束归 route-selection；业务问题是否成立归 framing；评测的执行与试点归 pilot；对客户的措辞归 comms。

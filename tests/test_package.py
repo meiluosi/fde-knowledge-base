@@ -53,8 +53,6 @@ class PackageTests(unittest.TestCase):
     def test_no_market_data_in_references(self):
         # 产品名、价格等易变事实不入长期规则
         for p in (R / 'references').glob('*.md'):
-            if p.name == 'original-material.md':
-                continue
             self.assertNotRegex(p.read_text(), r'\$\s?\d|¥\s?\d|元/千')
 
     def test_behavioral_cases_exist(self):

@@ -1,6 +1,6 @@
 # 开发记录与待办
 
-2026-10-20，v0.1.0。来源：用户提供的书稿材料（RAG 项目实践、知识库问题、评测集、不适用情形）、两张截图（五环节故障表、图 15-2）和一条补充建议（原文兜底）。原文与截图转录保存在本机 `references/original-material.md`；因出处与公开授权未确认，已列入 .gitignore，不随公开仓库发布。fde-problem-framing、fde-ramp 的 SKILL.md 经 GitHub 读取，blob SHA 见 [upstream-sources.json](references/upstream-sources.json)；fde-route-selection、fde-pilot、fde-comms 读取的是本机副本的 SKILL.md、handoff/series 与测试，用于对齐结构、证据协议和结论词，未做指纹。
+2026-10-20，v0.1.0。来源：用户提供的书稿材料（RAG 项目实践、知识库问题、评测集、不适用情形）、两张截图（五环节故障表、图 15-2）和一条补充建议（原文兜底）。原文与截图因出处与公开授权未确认，未随仓库发布，并已在作者本机清除。fde-problem-framing、fde-ramp 的 SKILL.md 经 GitHub 读取，blob SHA 见 [upstream-sources.json](references/upstream-sources.json)；fde-route-selection、fde-pilot、fde-comms 读取的是本机副本的 SKILL.md、handoff/series 与测试，用于对齐结构、证据协议和结论词，未做指纹。
 
 ## 为什么是一个 Skill，而且不是“RAG 搭建手册”
 - 系列的 Skill 是**判断型**的：产出是能让人决定下一步的卡，不是实施手册；实施不在范围。
@@ -24,7 +24,7 @@
 ## 待办（不阻碍试用）
 1. 在真实客户授权范围内跑一次摸底，用真实通过率与失败类型替换示例中的教学假设。
 2. 在目标宿主安装后按 tests/behavioral-cases.md 回归四个模式；跨模型重复并记录模型/版本/日期。
-3. 与 fde-pilot 约定评测集与指标的交接字段；在 fde-pilot 的 series.md 系列地图中补本 Skill 一行（本工程不改上游原件）。
+3. 与 fde-pilot 约定评测集与指标的交接字段。系列地图已于 2026-10-20 在 fde-demo、fde-pilot 的 references/series.md 登记本 Skill（两仓库的修改尚未提交）；fde-route-selection 与 fde-knowledge-base 的 series 约定仍待与 comms 一并核对。
 4. 核对 route-selection 的 constraints.md、cheatsheet.md 与本 Skill 的环境约束、检索一行是否一致（目前只对照了 SKILL.md、routes、cheatsheet 的检索相关行）。
 5. 生成侧的忠实度、相关性、拒答评分规则仍需有人工或经校准的判定办法，本版只给口径。
 6. 书稿发布前由用户确认公开许可与匿名化。
