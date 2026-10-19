@@ -1,0 +1,4 @@
+interface:
+  display_name: "FDE 企业知识库判断"
+  short_description: "先摸底文档与知识状况，再判断路径、治理、评测与原文兜底；质量上不去时分层定位"
+  default_prompt: "用 $fde-knowledge-base 看这个企业知识库项目，先告诉我写方案之前要做哪些摸底。"

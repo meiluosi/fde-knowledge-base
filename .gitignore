@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+
+# 真实案例运行记录（含客户细节，不入库）
+runs/
+
+# 用户提供的原始材料转录：出处与公开授权未确认，不入公开仓库
+references/original-material.md
