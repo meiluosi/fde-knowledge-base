@@ -22,10 +22,10 @@ cp -R -n fde-knowledge-base "${CODEX_HOME:-$HOME/.codex}/skills/"
 
 ## 工程内容
 - SKILL.md：入口与四种模式路由。
-- references/：模式、文档摸底、知识状况与治理、路径适配、五环节与候选改动、诊断流程、原文兜底、评测集、证据、衔接、原始材料。
+- references/：模式、文档摸底、知识状况与治理、路径适配、最简替代方案、四层任务、五环节与候选改动、诊断流程、原文兜底、评测集、证据、衔接。
 - templates/：知识库判断卡、摸底表、治理章程、评测集、诊断日志、审查报告。
 - examples/hr-policy-qa：教学假设示例，不是客户事实。
-- scripts/audit_sample.py：按层抽样、通过率 Wilson 区间；scripts/retrieval_metrics.py：召回、精度、排序。只对用户提供的记录做算术，不验证记录真伪。
+- scripts/audit_sample.py：按层抽样、通过率 Wilson 区间；scripts/retrieval_metrics.py：召回、精度、排序；scripts/layer_report.py：四层任务逐题标注汇总。只对用户提供的记录做算术，不验证记录真伪。
 - tests/：脚本与包结构测试，加人工回归用的行为用例。
 - DEVELOPMENT.md：来源与相对原材料的方法修订；ROADMAP.md：推进计划。
 
@@ -45,8 +45,13 @@ python3 -m unittest discover -s tests -v
 python3 scripts/audit_sample.py rate --pass 45 --total 50
 python3 scripts/audit_sample.py sample --manifest files.csv --strata-col type --n 50 --seed 7
 python3 scripts/retrieval_metrics.py --input labelled.jsonl --k 3,5,10
+python3 scripts/layer_report.py --input layers.csv
 ```
 命令里的数字与文件是占位。单元测试和静态检查不能证明模型必然遵守流程，更不能证明某个知识库方案有效；行为用例见 tests/behavioral-cases.md，须在目标宿主重跑。
+
+## 参考与致谢
+
+本系列各 Skill 在方法设计上不同程度参考了《FDE:AI落地实战指南》，以及作者本人的 FDE 实践经历。各 Skill 的流程、模板、规则与脚本是在此基础上改写和扩展的方法。示例中的人物、数字与场景均为虚构，不是客户事实。
 
 ## 许可
 MIT，见 [LICENSE](LICENSE)。示例为教学假设，不含客户数据；使用时自行确保不把客户材料提交进公开仓库。
