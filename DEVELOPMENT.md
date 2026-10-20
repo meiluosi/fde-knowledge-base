@@ -28,3 +28,15 @@
 4. 核对 route-selection 的 constraints.md、cheatsheet.md 与本 Skill 的环境约束、检索一行是否一致（目前只对照了 SKILL.md、routes、cheatsheet 的检索相关行）。
 5. 生成侧的忠实度、相关性、拒答评分规则仍需有人工或经校准的判定办法，本版只给口径。
 6. 书稿发布前由用户确认公开许可与匿名化。
+
+## v0.1.1：最简替代方案与四层验收（2026-10-20）
+依据：对照 fde-demo、fde-pilot、fde-comms、fde-route-selection 的迭代方式，以及作者标准规范检索项目的回溯（fde-demo 的 retro 案例：花了很多精力优化检索链路，事后判断规则直出就已经很好）和 fde-problem-framing 的检索类说明（`references/retrieval-framing.md`，版本指纹见 [upstream-sources.json](references/upstream-sources.json)）。
+1. 新增 [simplest-alternative.md](references/simplest-alternative.md)：把现有搜索、目录加状态规则、规则定位加原文直出、速查页、长上下文列为必比的对照臂；同题、同资料、同验收线；成本形态一并算；结论规则：已够→Pivot，不够→写明哪一层不够，无法对照→Investigate。
+2. SKILL.md 的 Investigate 封顶规则增加“既没有对照过最简方案也没写明为何不对照”；Pivot 的定义扩展为“改走更简单的路径”。这是我们自己设的硬规则，不来自上游，须在真实使用中检验是否过严。
+3. 新增 [task-layers.md](references/task-layers.md)：采用 framing 的四层任务（找到候选文件、核验版本与适用范围、取得有权限的正文并定位、解释适用条件），规则：不跳层；目录命中不是解决问题；安全拒答不等于完成；每类问题要求验收到哪一层由业务定。
+4. 评测集增加“适用条件”“要求层级”两个字段，增加适用范围题、“已知文件找条款”题与对照臂；诊断日志增加“首个未过的层”。
+5. 新增 `scripts/layer_report.py`：对人工逐题的四层标注汇总，越层标注不按后面层计，安全拒答单列，完成率带区间。
+6. 行为用例增加 19–24。
+7. 待与 fde-demo、fde-pilot 的 series.md 里 `kb:Pivot` 的说明保持一致（已同步，见该文件）。
+8. 模拟行为测试 24 例加修订后重跑 5 例，见 [tests/RESULTS-v0.1.1.md](tests/RESULTS-v0.1.1.md)。依据观察做了四处修订：SKILL.md 加篇幅与“数字用脚本算”；eval-set.md 加“业务方时间紧时”与锚定风险；`layer_report.py` 增加 `should_refuse`，应拒答题单独报“拒答正确”，不进完成率分母。测试局限：判定者与作者同源、单次运行、子代理可读文件与运行脚本。
+9. 待办新增：用作者的标准规范检索项目做回溯，校准摸底表、评测集、治理章程；在宿主重跑；跨模型重复。

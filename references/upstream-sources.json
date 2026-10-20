@@ -10,5 +10,11 @@
     "path": "SKILL.md",
     "blob_sha": "dd836029c1e0092e72bab84aa28c4a508e93bc6f",
     "read_date": "2026-10-20"
+  },
+  {
+    "repo": "meiluosi/fde-problem-framing",
+    "path": "references/retrieval-framing.md",
+    "blob_sha": "b991e4f5564e9ca2c112f61070aeff7935039316",
+    "read_date": "2026-10-20"
   }
 ]

@@ -23,7 +23,8 @@ class PackageTests(unittest.TestCase):
 
     def test_upstream_fingerprints(self):
         rows = json.loads((R / 'references/upstream-sources.json').read_text())
-        self.assertEqual(len(rows), 2)
+        self.assertGreaterEqual(len(rows), 3)
+        self.assertIn('references/retrieval-framing.md', {r['path'] for r in rows})
         for r in rows:
             self.assertRegex(r['blob_sha'], r'^[0-9a-f]{40}$')
 
@@ -34,7 +35,8 @@ class PackageTests(unittest.TestCase):
     def test_skill_links_every_reference_and_template(self):
         skill = (R / 'SKILL.md').read_text()
         for name in ('modes', 'doc-audit', 'knowledge-health', 'fit', 'pipeline',
-                     'diagnosis-flow', 'grounding-display', 'eval-set', 'evidence', 'handoff'):
+                     'diagnosis-flow', 'grounding-display', 'eval-set', 'evidence', 'handoff',
+                     'simplest-alternative', 'task-layers'):
             self.assertIn('references/%s.md' % name, skill)
         for name in ('kb-card', 'doc-audit-sheet', 'governance-charter',
                      'eval-set-sheet', 'diagnosis-log', 'review'):
@@ -49,6 +51,20 @@ class PackageTests(unittest.TestCase):
         text = (R / 'SKILL.md').read_text()
         for key in ('权限与密级', '最多 Investigate'):
             self.assertIn(key, text)
+
+    def test_simplest_alternative_and_layers_wired_in(self):
+        skill = (R / 'SKILL.md').read_text()
+        self.assertIn('最简方案', skill)
+        self.assertRegex(skill, r'既没有对照过最简方案')
+        card = (R / 'templates/kb-card.md').read_text()
+        self.assertIn('最简替代方案对照', card)
+        self.assertIn('要求验收到哪一层', card)
+        sheet = (R / 'templates/eval-set-sheet.md').read_text()
+        for key in ('适用条件', '要求层级', 'layer_report.py'):
+            self.assertIn(key, sheet)
+        layers = (R / 'references/task-layers.md').read_text()
+        for key in ('找到候选文件', '核验版本', '安全拒答'):
+            self.assertIn(key, layers)
 
     def test_no_market_data_in_references(self):
         # 产品名、价格等易变事实不入长期规则

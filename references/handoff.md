@@ -11,7 +11,7 @@
 |---|---|---|
 | fde-problem-framing 定义卡 | 场景、所针对的环节、成功指标、错误代价、拦截方式 | 把“要回答什么问题”拆成问题类型与路径；错误代价决定原文优先的范围 |
 | framing 的验证计划与抽样 | 已有样本、标注与仲裁安排 | 沿用并补“标准出处”字段，变成评测集 |
-| framing 的 retrieval-framing 思路 | 区分“找到文件”“核验状态与范围”“回答正文条款” | 对应本 Skill 的检索、治理（状态）、生成三层 |
+| framing 的 retrieval-framing（四层任务：找到候选文件、核验版本与适用范围、取得有权限的正文并定位、在上下文里解释） | 验收口径、“拒答不等于完成”、先比较目录维护与全文搜索等简单办法 | 直接采用为 [task-layers.md](task-layers.md) 和 [simplest-alternative.md](simplest-alternative.md)；对应检索、治理、解析切分权限、生成各环节 |
 | fde-route-selection 决策卡 | 路线（含是否检索）、部署形态、硬约束（数据不出境、私有化） | 硬约束约束解析/识别/向量化能否用外部服务；路线选了非检索时只核对冲突 |
 | ramp 的 activities、glossary、corrections | 谁在查文档、术语、已修正的流程 | 已校准术语进同义词/术语表；活动表里的“查制度/翻手册”环节是问题来源 |
 

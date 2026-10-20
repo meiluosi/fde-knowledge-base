@@ -117,5 +117,84 @@ class RetrievalMetricTests(unittest.TestCase):
                 M.load(str(p))
 
 
+import layer_report as L  # noqa: E402
+
+
+class LayerReportTests(unittest.TestCase):
+    def row(self, **kw):
+        base = {'id': 'Q1', 'type': '条款', 'required': '4', 'l1': '1', 'l2': '1', 'l3': '1', 'l4': '1', 'refusal': ''}
+        base.update(kw)
+        return base
+
+    def test_complete_when_all_required_layers_pass(self):
+        r = L.evaluate_row(self.row())
+        self.assertTrue(r['complete'])
+        self.assertEqual(r['achieved'], 4)
+
+    def test_cannot_skip_layers(self):
+        # 第 2 层未过，第 4 层标通过：只算到第 1 层，并标记越层
+        r = L.evaluate_row(self.row(l2='0', l3='1', l4='1'))
+        self.assertEqual(r['achieved'], 1)
+        self.assertFalse(r['complete'])
+        self.assertTrue(r['skipped'])
+        self.assertEqual(r['first_fail'], 2)
+
+    def test_required_layer_lower_than_four(self):
+        r = L.evaluate_row(self.row(required='2', l3='0', l4='0'))
+        self.assertTrue(r['complete'])
+
+    def test_unrated_stops_chain_and_is_reported(self):
+        r = L.evaluate_row(self.row(l2='', l3='', l4=''))
+        self.assertEqual(r['achieved'], 1)
+        self.assertEqual(r['unrated'], [2, 3, 4])
+        self.assertFalse(r['complete'])
+
+    def test_safe_refusal_is_not_complete(self):
+        r = L.evaluate_row(self.row(l1='1', l2='1', l3='1', l4='1', refusal='safe'))
+        self.assertFalse(r['complete'])
+        s = L.summarize([self.row(id='Q1', refusal='safe'), self.row(id='Q2')])
+        self.assertEqual(s['complete'], 1)
+        self.assertEqual(s['safe_refusal'], ['Q1'])
+        self.assertEqual(s['answered'], 1)
+
+    def test_should_refuse_rows_are_reported_separately(self):
+        rows = [
+            self.row(id='Q1'),
+            self.row(id='Q2', should_refuse='1', l1='', l2='', l3='', l4='', refusal='safe'),
+            self.row(id='Q3', should_refuse='1', l1='', l2='', l3='', l4='', refusal=''),
+        ]
+        s = L.summarize(rows)
+        self.assertEqual(s['n'], 1)                    # 完成率分母不含应拒答题
+        self.assertEqual(s['complete'], 1)
+        self.assertEqual(s['should_refuse_n'], 2)
+        self.assertEqual(s['refused_correctly'], 1)
+        self.assertEqual(s['answered_when_should_refuse'], ['Q3'])
+        self.assertEqual(s['safe_refusal'], [])        # 正确拒答不混进“安全拒答”
+
+    def test_should_refuse_cannot_be_wrong_refusal(self):
+        with self.assertRaises(ValueError):
+            L.evaluate_row(self.row(should_refuse='1', refusal='wrong'))
+
+    def test_bad_values(self):
+        with self.assertRaises(ValueError):
+            L.evaluate_row(self.row(required='5'))
+        with self.assertRaises(ValueError):
+            L.evaluate_row(self.row(l1='maybe'))
+        with self.assertRaises(ValueError):
+            L.evaluate_row(self.row(refusal='x'))
+
+    def test_cli(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 'l.csv'
+            with open(p, 'w', newline='', encoding='utf-8') as f:
+                w = csv.DictWriter(f, fieldnames=['id', 'type', 'required', 'l1', 'l2', 'l3', 'l4', 'refusal', 'should_refuse'])
+                w.writeheader()
+                w.writerow(self.row(id='Q1'))
+                w.writerow(self.row(id='Q2', l2='0', l3='1', l4='0'))
+                w.writerow(self.row(id='Q3', refusal='safe'))
+                w.writerow(self.row(id='Q4', should_refuse='1', l1='', l2='', l3='', l4='', refusal='safe'))
+            L.main(['--input', str(p)])
+
+
 if __name__ == '__main__':
     unittest.main()

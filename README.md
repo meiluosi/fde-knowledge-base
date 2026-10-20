@@ -1,4 +1,4 @@
-# fde-knowledge-base · v0.1.0
+# fde-knowledge-base · v0.1.1
 
 FDE 系列的企业知识库判断 Skill：针对文档检索（RAG）类项目，先摸底真实文档与知识状况，再判断问题该不该走检索、治理谁来做、拿什么评、原文怎么兜底；系统在跑但质量上不去时，分检索、生成与知识本身三层定位。上游是 fde-problem-framing（业务问题定义）和 fde-route-selection（技术路线）；本 Skill 不需要安装它们，也不修改它们的仓库。
 
@@ -47,7 +47,7 @@ python3 scripts/audit_sample.py sample --manifest files.csv --strata-col type --
 python3 scripts/retrieval_metrics.py --input labelled.jsonl --k 3,5,10
 python3 scripts/layer_report.py --input layers.csv
 ```
-命令里的数字与文件是占位。单元测试和静态检查不能证明模型必然遵守流程，更不能证明某个知识库方案有效；行为用例见 tests/behavioral-cases.md，须在目标宿主重跑。
+命令里的数字与文件是占位。单元测试和静态检查不能证明模型必然遵守流程，更不能证明某个知识库方案有效；行为用例见 tests/behavioral-cases.md（24 条），模拟运行结果与局限见 [tests/RESULTS-v0.1.1.md](tests/RESULTS-v0.1.1.md)，仍须在目标宿主重跑。
 
 ## 参考与致谢
 
